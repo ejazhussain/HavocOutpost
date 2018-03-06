@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HavocBot", "HavocBot\HavocBot.csproj", "{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HavocBot", "HavocBot\HavocBot.csproj", "{1BEB697D-6544-4D51-BB1A-2118CBA7FDFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BEB697D-6544-4D51-BB1A-2118CBA7FDFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BEB697D-6544-4D51-BB1A-2118CBA7FDFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BEB697D-6544-4D51-BB1A-2118CBA7FDFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BEB697D-6544-4D51-BB1A-2118CBA7FDFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0C9DB21E-7E4A-47F7-B504-F175A067194B}
+		SolutionGuid = {148C6A32-96E3-4572-BF13-83E6EE306C16}
 	EndGlobalSection
 EndGlobal
