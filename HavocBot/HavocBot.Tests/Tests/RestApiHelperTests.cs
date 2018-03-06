@@ -11,7 +11,7 @@ namespace HavocBot.Tests
     {
         private const string BaseUri = "https://msopenhackeu.azurewebsites.net";
         private const string TriviaQuestionUri = BaseUri + "/api/trivia/question";
-        private const string ContentTypeJson = "application/json";
+        private const string TriviaSearchUri = BaseUri + "/api/trivia/search?k={0}";
 
         [TestInitialize]
         public void Initialize()
@@ -26,16 +26,25 @@ namespace HavocBot.Tests
         }
 
         [TestMethod]
+        public void TestExecuteGetPost()
+        {
+            string requestUri = string.Format(TriviaSearchUri, "Tomi");
+            string response = RestApiHelper.ExecuteHttpGetAsync(requestUri, RestApiHelper.ContentTypeJson).Result;
+            System.Diagnostics.Debug.WriteLine($"Received response: {response}");
+        }
+
+        [TestMethod]
         public void TestExecuteHttpPost()
         {
             HttpContent httpContent =
                 new StringContent(
                     "{ \"id\": \"00000000-0000-0000-0000-000000000000\" }",
                     Encoding.UTF8,
-                    ContentTypeJson);
+                    RestApiHelper.ContentTypeJson);
 
-            string response = RestApiHelper.ExecuteHttpPostAsync(TriviaQuestionUri, httpContent, ContentTypeJson).Result;
-            System.Diagnostics.Debug.WriteLine(response);
+            string response = RestApiHelper.ExecuteHttpPostAsync(
+                TriviaQuestionUri, httpContent, RestApiHelper.ContentTypeJson).Result;
+            System.Diagnostics.Debug.WriteLine($"Received response: {response}");
         }
     }
 }
