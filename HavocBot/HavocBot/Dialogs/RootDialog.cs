@@ -70,19 +70,7 @@ namespace HavocBot.Dialogs
                                 triviaDatastore.PendingTriviaQuestions.Add(triviaPlayer.Id, triviaQuestion.Id);
                             }
 
-                            string playerName = triviaPlayer.Name;
-                            string[] nameElements = playerName.Split(' ');
-
-                            if (nameElements.Length > 1)
-                            {
-                                playerName = nameElements[0];
-                            }
-                            else
-                            {
-                                playerName = triviaPlayer.Name;
-                            }
-
-                            await context.PostAsync($"{playerName}: your question is: {triviaQuestion.Text}");
+                            await context.PostAsync($"{GetFirstName(triviaPlayer)}: your question is: {triviaQuestion.Text}");
 
                             string questionOptions = $"Options are:{LineBreak}";
 
@@ -166,11 +154,11 @@ namespace HavocBot.Dialogs
 
                                     if (triviaAnswerResponse.Correct)
                                     {
-                                        await context.PostAsync($"{triviaPlayer.Name.Split(' ')}: That is correct!");
+                                        await context.PostAsync($"{GetFirstName(triviaPlayer)}: That is correct!");
                                     }
                                     else
                                     {
-                                        await context.PostAsync($"{triviaPlayer.Name.Split(' ')}: I'm afraid that is not the correct answer. Better luck next time!");
+                                        await context.PostAsync($"{GetFirstName(triviaPlayer)}: I'm afraid that is not the correct answer. Better luck next time!");
                                     }
                                 }
                                 else
@@ -251,6 +239,33 @@ namespace HavocBot.Dialogs
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="triviaPlayer"></param>
+        /// <returns></returns>
+        private string GetFirstName(TriviaPlayer triviaPlayer)
+        {
+            string playerName = string.Empty;
+
+            if (triviaPlayer != null && !string.IsNullOrEmpty(triviaPlayer.Name))
+            {
+                playerName = triviaPlayer.Name;
+                string[] nameElements = playerName.Split(' ');
+
+                if (nameElements.Length > 1)
+                {
+                    playerName = nameElements[0];
+                }
+                else
+                {
+                    playerName = triviaPlayer.Name;
+                }
+            }
+
+            return playerName;
         }
     }
 }
