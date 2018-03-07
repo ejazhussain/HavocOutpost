@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HavocBot.Datastore;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,12 @@ namespace HavocBot
 {
     public static class WebApiConfig
     {
+        public static InMemoryTriviaDatastore TriviaDatastore
+        {
+            get;
+            private set;
+        }
+
         public static void Register(HttpConfiguration config)
         {
             // Json settings
@@ -32,6 +39,8 @@ namespace HavocBot
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            TriviaDatastore = new InMemoryTriviaDatastore();
         }
     }
 }

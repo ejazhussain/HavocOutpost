@@ -9,7 +9,7 @@ namespace HavocBot.Models
      *   "text": "string"
      * }
      */
-    public class TriviaQuestionOptions
+    public class TriviaQuestionOption
     {
         public int Id
         {
@@ -50,7 +50,7 @@ namespace HavocBot.Models
             set;
         }
 
-        public List<TriviaQuestionOptions> QuestionOptions
+        public List<TriviaQuestionOption> QuestionOptions
         {
             get;
             set;
