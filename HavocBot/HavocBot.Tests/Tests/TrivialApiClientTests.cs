@@ -32,6 +32,12 @@ namespace HavocBot.Tests.Tests
         {
             TriviaQuestion triviaQuestion =
                 _triviaApiClient.GetQuestionAsync(new TriviaPlayer() { Id = "846617cd-f4dc-46b4-8106-f24a7a0bccd7" }).Result;
+
+            Assert.AreNotEqual(null, triviaQuestion);
+            Assert.AreEqual(false, string.IsNullOrEmpty(triviaQuestion.Text));
+            System.Diagnostics.Debug.WriteLine($"Deserialized question text: {triviaQuestion.Text}");
+            Assert.AreNotEqual(null, triviaQuestion.QuestionOptions);
+            Assert.AreNotEqual(0, triviaQuestion.QuestionOptions.Count);
         }
     }
 }
