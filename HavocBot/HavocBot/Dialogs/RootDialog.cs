@@ -30,7 +30,7 @@ namespace HavocBot.Dialogs
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
             var activity = await result as Activity;
-            string messageText = activity.Text?.ToLower();
+            string messageText = CleanMessage(activity);
 
             if (!string.IsNullOrEmpty(messageText))
             {
@@ -155,6 +155,40 @@ namespace HavocBot.Dialogs
             }
 
             context.Wait(MessageReceivedAsync);
+        }
+
+        private string CleanMessage(Activity activity)
+        {
+            string cleanedMessage = string.Empty;
+            string botName = activity.Recipient?.Name?.ToLower();
+            string messageText = activity.Text?.Trim().ToLower();
+
+            if (!string.IsNullOrEmpty(messageText))
+            {
+                if (!string.IsNullOrEmpty(botName)
+                    && messageText.Contains(botName))
+                {
+                    // Remove bot name - here we assume it's in the beginning of the message
+                    string[] elements = messageText.Split(' ');
+                    
+                    if (elements.Length > 1)
+                    {
+                        for (int i = 1; i < elements.Length; ++i)
+                        {
+                            cleanedMessage += elements[i];
+
+                            if (i < elements.Length - 1)
+                            {
+                                cleanedMessage += ' ';
+                            }
+                        }
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine($"\"{messageText}\" -> \"{cleanedMessage}\"");
+            }
+
+            return cleanedMessage;
         }
 
         /// <summary>
