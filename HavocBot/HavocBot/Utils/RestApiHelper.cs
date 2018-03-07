@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Connector;
+﻿using HavocBot.Models;
+using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Teams;
 using System;
 using System.Collections.Generic;
@@ -113,7 +114,7 @@ namespace HavocBot.Utils
         }
 
 
-        public static async Task<List<TriviaMember>> GetTeamsMembers(Activity activity, string serviceUrl,string havocTeamId)
+        public static async Task<List<TriviaMember>> GetTeamsMembers(Activity activity, string serviceUrl, string havocTeamId)
         {
 
             var results = new List<TriviaMember>();
@@ -129,11 +130,13 @@ namespace HavocBot.Utils
                     var members = await connector.Conversations.GetConversationMembersAsync(activity.Conversation.Id);
                     foreach (var member in members.AsTeamsChannelAccounts())
                     {
+
                         results.Add(new TriviaMember()
                         {
                             Id = member != null ? member.Id : string.Empty,
                             Name = member != null ? member.Name : string.Empty
                         });
+
                     }
                 }
             }
