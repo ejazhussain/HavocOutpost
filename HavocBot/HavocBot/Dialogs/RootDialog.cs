@@ -1,4 +1,5 @@
-﻿using System; 
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HavocBot.DAL;
 using HavocBot.Datastore;
@@ -21,8 +22,7 @@ namespace HavocBot.Dialogs
         private const string HelpMessage =
             "Here's what you can do:" + LineBreak
             + "* To register a trivia team, type \"" + CommandRegister + "\"" + LineBreak
-            + "* Type \"" + CommandQuestion + "\" to get a trivia question" + LineBreak
-            + "* To answer a question simply type the option number" + LineBreak;
+            + "* Type \"" + CommandQuestion + "\" to get a trivia question";
 
         private const string HavocTeamId = "19:7f0240ce5cd64e8ea7c04cf6f1ccb693@thread.skype";
 
@@ -70,9 +70,18 @@ namespace HavocBot.Dialogs
                                 triviaDatastore.PendingTriviaQuestions.Add(triviaPlayer.Id, triviaQuestion.Id);
                             }
 
-                            await context.PostAsync($"{GetFirstName(triviaPlayer)}: your question is: {triviaQuestion.Text}");
+                            await context.PostAsync($"{GetFirstName(triviaPlayer)}, your question is:");
+                            HeroCard questionCard = CardFactory.CreateQuestionCard(triviaQuestion);
+                            Activity replyActivity = activity.CreateReply();
 
-                            string questionOptions = $"Options are:{LineBreak}";
+                            replyActivity.Attachments = new List<Attachment>()
+                            {
+                                questionCard.ToAttachment()
+                            };
+
+                            await context.PostAsync(replyActivity);
+
+                            /*string questionOptions = $"Options are:{LineBreak}";
 
                             foreach (TriviaQuestionOption triviaQuestionOption in triviaQuestion.QuestionOptions)
                             {
@@ -80,7 +89,7 @@ namespace HavocBot.Dialogs
                             }
 
                             await context.PostAsync(questionOptions);
-                            await context.PostAsync("When answering, simply type the option number");
+                            await context.PostAsync("When answering, simply type the option number");*/
                         }
                         else
                         {
