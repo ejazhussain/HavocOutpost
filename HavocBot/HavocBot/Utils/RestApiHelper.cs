@@ -140,6 +140,7 @@ namespace HavocBot.Utils
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Failed to get members: {ex.Message}");
                 return null;
             }
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace HavocBot.Tests.Tests
 {
     [TestClass]
-    public class TrivialApiClientTests
+    public class TriviaApiClientTests
     {
         private TriviaApiClient _triviaApiClient;
 
@@ -25,6 +25,32 @@ namespace HavocBot.Tests.Tests
         public void Cleanup()
         {
             System.Diagnostics.Debug.WriteLine("Cleanup");
+        }
+
+        [TestMethod]
+        public void TestRegister()
+        {
+            TriviaRoster triviaRoster = new TriviaRoster()
+            {
+                TeamId = "19:7f0240ce5cd64e8ea7c04cf6f1ccb693@thread.skype"
+            };
+
+            List<TriviaMember> triviaMembers = new List<TriviaMember>()
+            {
+                new TriviaMember()
+                {
+                    Id = "846617cd-f4dc-46b4-8106-f24a7a0bccd7",
+                    Name = "Tomi Paananen"
+                }
+            };
+
+            triviaRoster.Members = triviaMembers;
+
+            TriviaRegister triviaRegister =
+                _triviaApiClient.RegisterAsync(triviaRoster).Result;
+
+            Assert.AreNotEqual(null, triviaRegister);
+            System.Diagnostics.Debug.WriteLine($"Trivia register result: Success == {triviaRegister.Success}, Message == \"{triviaRegister.Message}\"");
         }
 
         [TestMethod]
@@ -63,6 +89,10 @@ namespace HavocBot.Tests.Tests
 
             if (triviaLeaderboard.Length > 0)
             {
+                string teamId = triviaLeaderboard[0].Id;
+                Assert.AreEqual(false, string.IsNullOrEmpty(teamId));
+                System.Diagnostics.Debug.WriteLine($"Deserialized team ID: {teamId}");
+
                 string teamName = triviaLeaderboard[0].Name;
                 Assert.AreEqual(false, string.IsNullOrEmpty(teamName));
                 System.Diagnostics.Debug.WriteLine($"Deserialized team name: {teamName}");

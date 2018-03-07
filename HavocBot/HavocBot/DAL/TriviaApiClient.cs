@@ -27,10 +27,11 @@ namespace HavocBot.DAL
         public async Task<TriviaRegister> RegisterAsync(TriviaRoster triviaRoster)
         {
             TriviaRegister triviaRegister = null;
+            string serializedTriviaRoster = JsonConvert.SerializeObject(triviaRoster);
 
             HttpContent httpContent =
                 new StringContent(
-                    JsonConvert.SerializeObject(triviaRoster),
+                    serializedTriviaRoster,
                     Encoding.UTF8,
                     RestApiHelper.ContentTypeJson);
 
@@ -39,13 +40,29 @@ namespace HavocBot.DAL
             try
             {
                 response = await RestApiHelper.ExecuteHttpPostAsync(
-                    TriviaQuestionUri, httpContent, RestApiHelper.ContentTypeJson);
-                System.Diagnostics.Debug.WriteLine($"Received response: {response}");
-                triviaRegister = JsonConvert.DeserializeObject<TriviaRegister>(response);
+                    TriviaRegisterUri, httpContent, RestApiHelper.ContentTypeJson);
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine($"Failed to register: {e.Message}");
+            }
+
+            if (string.IsNullOrEmpty(response))
+            {
+                System.Diagnostics.Debug.WriteLine("The response from register POST operation was null");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"Received response: {response}");
+
+                try
+                {
+                    triviaRegister = JsonConvert.DeserializeObject<TriviaRegister>(response);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Failed to deserialize register response: {e.Message}");
+                }
             }
 
             return triviaRegister;
