@@ -130,7 +130,7 @@ namespace HavocBot.Dialogs
                     int answerId = -1;
                     bool numberParsedSuccessfully = int.TryParse(messageText, out answerId);
 
-                    if (numberParsedSuccessfully && answerId >= 0 && answerId <= MaxQuestionOptionNumber)
+                    if (numberParsedSuccessfully && answerId >= 0)
                     {
                         TriviaPlayer triviaPlayer = await GetPlayer(activity);
 
