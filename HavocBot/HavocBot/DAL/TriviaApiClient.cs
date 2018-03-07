@@ -40,7 +40,7 @@ namespace HavocBot.DAL
             try
             {
                 response = await RestApiHelper.ExecuteHttpPostAsync(
-                    TriviaQuestionUri, httpContent, RestApiHelper.ContentTypeJson);
+                    TriviaRegisterUri, httpContent, RestApiHelper.ContentTypeJson);
             }
             catch (Exception e)
             {

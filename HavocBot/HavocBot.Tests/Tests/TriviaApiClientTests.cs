@@ -32,7 +32,7 @@ namespace HavocBot.Tests.Tests
         {
             TriviaRoster triviaRoster = new TriviaRoster()
             {
-                TeamId = "17c905ae-df5f-4f03-a354-b698115d8a28"
+                TeamId = "19:7f0240ce5cd64e8ea7c04cf6f1ccb693@thread.skype"
             };
 
             List<TriviaMember> triviaMembers = new List<TriviaMember>()
