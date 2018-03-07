@@ -41,6 +41,35 @@ namespace HavocBot.Tests.Tests
         }
 
         [TestMethod]
+        public void TestGetLeaderboard()
+        {
+            TriviaContext triviaContext = new TriviaContext()
+            {
+                TeamId = "",
+                ChannelId = "",
+                Locale = "",
+                Theme = "",
+                EntityId = "",
+                SubEntityId = "",
+                Upn = "",
+                Tid = "",
+                GroupId = ""
+            };
+
+            TriviaLeaderboard[] triviaLeaderboard =
+                _triviaApiClient.GetLeaderboardAsync(triviaContext, true).Result;
+
+            Assert.AreNotEqual(null, triviaLeaderboard);
+
+            if (triviaLeaderboard.Length > 0)
+            {
+                string teamName = triviaLeaderboard[0].Name;
+                Assert.AreEqual(false, string.IsNullOrEmpty(teamName));
+                System.Diagnostics.Debug.WriteLine($"Deserialized team name: {teamName}");
+            }
+        }
+
+        [TestMethod]
         public void TestSearchPlayer()
         {
             TriviaPlayer[] triviaPlayers =

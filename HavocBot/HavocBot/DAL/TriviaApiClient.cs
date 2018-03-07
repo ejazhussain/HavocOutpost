@@ -121,9 +121,9 @@ namespace HavocBot.DAL
         /// <param name="triviaContext"></param>
         /// <param name="isTeam">If true, will look for team. If false, will look for user.</param>
         /// <returns></returns>
-        public async Task<TriviaLeaderboard> GetLeaderboardAsync(TriviaContext triviaContext, bool isTeam)
+        public async Task<TriviaLeaderboard[]> GetLeaderboardAsync(TriviaContext triviaContext, bool isTeam)
         {
-            TriviaLeaderboard triviaLeaderboard = null;
+            TriviaLeaderboard[] triviaLeaderboard = null;
 
             string requestUri = isTeam ? TriviaLeaderboardTeamUri : TriviaLeaderboardUserUri;
 
@@ -140,7 +140,7 @@ namespace HavocBot.DAL
                 response = await RestApiHelper.ExecuteHttpPostAsync(
                     requestUri, httpContent, RestApiHelper.ContentTypeJson);
                 System.Diagnostics.Debug.WriteLine($"Received response: {response}");
-                triviaLeaderboard = JsonConvert.DeserializeObject<TriviaLeaderboard>(response);
+                triviaLeaderboard = JsonConvert.DeserializeObject<TriviaLeaderboard[]>(response);
             }
             catch (Exception e)
             {

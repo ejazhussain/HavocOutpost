@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace HavocBot.Models
 {
@@ -14,12 +13,7 @@ namespace HavocBot.Models
      *   }
      * ]
      */
-    public class TriviaLeaderboard
+    public class TriviaLeaderboard : TriviaPlayer
     {
-        List<TriviaPlayer> Players
-        {
-            get;
-            set;
-        }
     }
 }
