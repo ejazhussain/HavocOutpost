@@ -17,13 +17,13 @@ namespace HavocBot.Models
             set;
         }
 
-        public string QuestionId
+        public int QuestionId
         {
             get;
             set;
         }
 
-        public string AnswerId
+        public int AnswerId
         {
             get;
             set;
