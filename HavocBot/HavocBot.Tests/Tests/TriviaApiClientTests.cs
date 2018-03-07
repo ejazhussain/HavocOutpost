@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace HavocBot.Tests.Tests
 {
     [TestClass]
-    public class TrivialApiClientTests
+    public class TriviaApiClientTests
     {
         private TriviaApiClient _triviaApiClient;
 
@@ -25,6 +25,32 @@ namespace HavocBot.Tests.Tests
         public void Cleanup()
         {
             System.Diagnostics.Debug.WriteLine("Cleanup");
+        }
+
+        [TestMethod]
+        public void TestRegister()
+        {
+            TriviaRoster triviaRoster = new TriviaRoster()
+            {
+                TeamId = "19:7f0240ce5cd64e8ea7c04cf6f1ccb693@thread.skype"
+            };
+
+            List<TriviaMember> triviaMembers = new List<TriviaMember>()
+            {
+                new TriviaMember()
+                {
+                    Id = "29:1pp-UDROkQmMxihhxhFpG6bf9jTPZiJXBsKvH=BpbnYGYstAD5Iy65q6NnfjgT6aq5KhOsnxEi1Vtk0MGmM06Bxw",
+                    Name = "Ejaz Hussain"
+                }
+            };
+
+            triviaRoster.Members = triviaMembers;
+
+            TriviaRegister triviaRegister =
+                _triviaApiClient.RegisterAsync(triviaRoster).Result;
+
+            Assert.AreNotEqual(null, triviaRegister);
+            System.Diagnostics.Debug.WriteLine($"Trivia register result: Success == {triviaRegister.Success}, Message == \"{triviaRegister.Message}\"");
         }
 
         [TestMethod]
