@@ -11,10 +11,13 @@ namespace HavocBot.DAL
 {
     public class TriviaApiClient
     {
-        private static readonly string TriviaBaseUri = "https://msopenhackeu.azurewebsites.net";
-        private static readonly string TriviaRegisterUri = TriviaBaseUri + "/api/trivia/register";
-        private static readonly string TriviaQuestionUri = TriviaBaseUri + "/api/trivia/question";
-        private static readonly string TriviaAnswerUri = TriviaBaseUri + "/api/trivia/answer";
+        public static readonly string TriviaBaseUri = "https://msopenhackeu.azurewebsites.net";
+        public static readonly string TriviaRegisterUri = TriviaBaseUri + "/api/trivia/register";
+        public static readonly string TriviaQuestionUri = TriviaBaseUri + "/api/trivia/question";
+        public static readonly string TriviaAnswerUri = TriviaBaseUri + "/api/trivia/answer";
+        public static readonly string TriviaLeaderboardTeamUri = TriviaBaseUri + "/api/trivia/leaderboard/team";
+        public static readonly string TriviaLeaderboardUserUri = TriviaBaseUri + "/api/trivia/leaderboard/user";
+        public static readonly string TriviaSearchUri = TriviaBaseUri + "/api/trivia/search?k={0}";
 
         /// <summary>
         /// 
@@ -80,9 +83,97 @@ namespace HavocBot.DAL
             return triviaQuestion;
         }
 
-        public async Task<TriviaAnswerResponse> PostAnswer()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="triviaAnswer"></param>
+        /// <returns></returns>
+        public async Task<TriviaAnswerResponse> PostAnswerAsync(TriviaAnswer triviaAnswer)
         {
-            return null;
+            TriviaAnswerResponse triviaAnswerResponse = null;
+
+            HttpContent httpContent =
+                new StringContent(
+                    JsonConvert.SerializeObject(triviaAnswer),
+                    Encoding.UTF8,
+                    RestApiHelper.ContentTypeJson);
+
+            string response = null;
+
+            try
+            {
+                response = await RestApiHelper.ExecuteHttpPostAsync(
+                    TriviaAnswerUri, httpContent, RestApiHelper.ContentTypeJson);
+                System.Diagnostics.Debug.WriteLine($"Received response: {response}");
+                triviaAnswerResponse = JsonConvert.DeserializeObject<TriviaAnswerResponse>(response);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error occured while posting an answer: {e.Message}");
+            }
+
+            return triviaAnswerResponse;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="triviaContext"></param>
+        /// <param name="isTeam">If true, will look for team. If false, will look for user.</param>
+        /// <returns></returns>
+        public async Task<TriviaLeaderboard> GetLeaderboardAsync(TriviaContext triviaContext, bool isTeam)
+        {
+            TriviaLeaderboard triviaLeaderboard = null;
+
+            string requestUri = isTeam ? TriviaLeaderboardTeamUri : TriviaLeaderboardUserUri;
+
+            HttpContent httpContent =
+                new StringContent(
+                    JsonConvert.SerializeObject(triviaContext),
+                    Encoding.UTF8,
+                    RestApiHelper.ContentTypeJson);
+
+            string response = null;
+
+            try
+            {
+                response = await RestApiHelper.ExecuteHttpPostAsync(
+                    requestUri, httpContent, RestApiHelper.ContentTypeJson);
+                System.Diagnostics.Debug.WriteLine($"Received response: {response}");
+                triviaLeaderboard = JsonConvert.DeserializeObject<TriviaLeaderboard>(response);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to get leaderboard: {e.Message}");
+            }
+
+            return triviaLeaderboard;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="searchTerm"></param>
+        /// <returns></returns>
+        public async Task<TriviaPlayer[]> SearchPlayerAsync(string searchTerm)
+        {
+            TriviaPlayer[] triviaPlayers = null;
+
+            string requestUri = string.Format(TriviaSearchUri, searchTerm);
+            string response = null;
+
+            try
+            {
+                response = await RestApiHelper.ExecuteHttpGetAsync(requestUri, RestApiHelper.ContentTypeJson);
+                System.Diagnostics.Debug.WriteLine($"Received response: {response}");
+                triviaPlayers = JsonConvert.DeserializeObject<TriviaPlayer[]>(response);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Search failed: {e.Message}");
+            }
+
+            return triviaPlayers;
         }
     }
 }

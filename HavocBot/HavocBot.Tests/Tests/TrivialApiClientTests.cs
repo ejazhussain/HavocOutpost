@@ -39,5 +39,21 @@ namespace HavocBot.Tests.Tests
             Assert.AreNotEqual(null, triviaQuestion.QuestionOptions);
             Assert.AreNotEqual(0, triviaQuestion.QuestionOptions.Count);
         }
+
+        [TestMethod]
+        public void TestSearchPlayer()
+        {
+            TriviaPlayer[] triviaPlayers =
+                _triviaApiClient.SearchPlayerAsync("Tomi").Result;
+
+            Assert.AreNotEqual(null, triviaPlayers);
+
+            if (triviaPlayers.Length > 0)
+            {
+                string playerName = triviaPlayers[0].Name;
+                Assert.AreEqual(false, string.IsNullOrEmpty(playerName));
+                System.Diagnostics.Debug.WriteLine($"Deserialized player name: {playerName}");
+            }
+        }
     }
 }

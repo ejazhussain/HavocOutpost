@@ -132,7 +132,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\TriviaAnswer.cs" />
     <Compile Include="Models\TriviaAnswerResponse.cs" />
+    <Compile Include="Models\TriviaContext.cs" />
     <Compile Include="Models\TriviaLeaderboard.cs" />
     <Compile Include="Models\TriviaMember.cs" />
     <Compile Include="Models\TriviaPlayer.cs" />
