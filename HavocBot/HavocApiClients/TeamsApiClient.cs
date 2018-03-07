@@ -1,11 +1,11 @@
-﻿using HavocBot.Models;
+﻿using HavocApiClients.Models;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Teams;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HavocBot.DAL
+namespace HavocApiClients
 {
     public class TeamsApiClient
     {

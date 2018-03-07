@@ -1,8 +1,8 @@
-﻿using System;
+﻿using HavocApiClients.Utils;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Net.Http;
 using System.Text;
-using HavocBot.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HavocBot.Tests
 {

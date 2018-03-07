@@ -72,6 +72,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HavocApiClients\HavocApiClients.csproj">
+      <Project>{92d460db-4263-4fd5-9dfe-25feebdac49a}</Project>
+      <Name>HavocApiClients</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HavocBot\HavocBot.csproj">
       <Project>{1beb697d-6544-4d51-bb1a-2118cba7fdff}</Project>
       <Name>HavocBot</Name>

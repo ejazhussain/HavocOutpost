@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HavocBot.DAL;
+using HavocApiClients;
+using HavocApiClients.Models;
 using HavocBot.Datastore;
-using HavocBot.Models;
 using HavocBot.Utils;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
@@ -13,7 +13,6 @@ namespace HavocBot.Dialogs
     [Serializable]
     public class RootDialog : IDialog<object>
     {
-        private const int MaxQuestionOptionNumber = 5;
         private const string LineBreak = "\n\r";
         private const string CommandHelp = "help";
         private const string CommandQuestion = "question";
@@ -80,16 +79,6 @@ namespace HavocBot.Dialogs
                             };
 
                             await context.PostAsync(replyActivity);
-
-                            /*string questionOptions = $"Options are:{LineBreak}";
-
-                            foreach (TriviaQuestionOption triviaQuestionOption in triviaQuestion.QuestionOptions)
-                            {
-                                questionOptions += $"{triviaQuestionOption.Id}: {triviaQuestionOption.Text}{LineBreak}";
-                            }
-
-                            await context.PostAsync(questionOptions);
-                            await context.PostAsync("When answering, simply type the option number");*/
                         }
                         else
                         {
@@ -185,6 +174,10 @@ namespace HavocBot.Dialogs
                         {
                             await context.PostAsync("I'm sorry, I couldn't find your player profile. Are you sure you have registered?");
                         }
+                    }
+                    else
+                    {
+                        await context.PostAsync(HelpMessage);
                     }
                 }
             }

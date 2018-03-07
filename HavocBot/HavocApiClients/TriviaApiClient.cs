@@ -1,12 +1,12 @@
-﻿using HavocBot.Models;
-using HavocBot.Utils;
+﻿using HavocApiClients.Models;
+using HavocApiClients.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HavocBot.DAL
+namespace HavocApiClients
 {
     public class TriviaApiClient
     {
