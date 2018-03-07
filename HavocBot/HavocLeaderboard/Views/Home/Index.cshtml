@@ -10,15 +10,13 @@
         <div class="form-group">
 
             <div class="radio">
-                <label><input type="radio" name="teamLearderBoard">Team LeaderBoard.</label>
+                <label><input type="radio" name="teamLearderBoard" onclick="onClick()">Team LeaderBoard.</label>
             </div>
             <div class="radio">
-                <label><input type="radio" name="individualLeaderBoard">Individual LearderBoard</label>
+                <label><input type="radio" name="individualLeaderBoard" onclick="onClick()">Individual LearderBoard</label>
             </div>
         </div>
     </form>
-
-
 </div>
 
 
@@ -27,15 +25,19 @@
 
 <script type="text/javascript">
 
+    debugger;
+
     microsoftTeams.initialize();
     microsoftTeams.settings.registerOnSaveHandler(function (saveEvent) {
 
+
+        debugger;
         var teamLearderBoardRadio = document.getElementsByName("teamLearderBoard");
         var individualLeaderBoardRadio = document.getElementsByName("individualLeaderBoard");
 
         if (teamLearderBoardRadio.checked) {
             var teamLearderBoardRadio = document.getElementsByName("teamLearderBoard");
-            console.log("")
+            console.log("teamLearderBoard");
         }
         if (individualLeaderBoardRadio.checked) {
             console.log("individualLeaderBoard");
@@ -45,6 +47,7 @@
     });
 
     function onClick() {
+        debugger;
         microsoftTeams.settings.setValidityState(true);
     }
 

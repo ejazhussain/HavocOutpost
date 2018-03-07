@@ -26,5 +26,12 @@ namespace HavocLeaderboard.Controllers
 
             return View();
         }
+
+
+        [Route("configure")]
+        public ActionResult Configure()
+        {
+            return View();
+        }
     }
 }
