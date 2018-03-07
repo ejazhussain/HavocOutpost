@@ -8,6 +8,8 @@ using Microsoft.Bot.Connector;
 using HavocBot.Utils;
 using System.Text;
 using Microsoft.Bot.Connector.Teams;
+using HavocBot.Models;
+using HavocBot.DAL;
 
 namespace HavocBot
 {
@@ -32,6 +34,19 @@ namespace HavocBot
 
             string serviceUrl = activity.ServiceUrl;
             var memebers = await RestApiHelper.GetTeamsMembers(activity, serviceUrl, havocTeamId);
+            
+            if (memebers?.Count > 0)
+            {
+                var triviaRoster = new TriviaRoster
+                {
+                    TeamId = havocTeamId,
+                    Members = memebers
+                };
+                var triviaApiClient = new TriviaApiClient();
+                var registerMemberResponse = await triviaApiClient.RegisterAsync(triviaRoster);
+
+            }
+
 
             if (activity.Type == ActivityTypes.Message)
             {

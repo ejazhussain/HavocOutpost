@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Connector;
+﻿using HavocBot.Models;
+using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Teams;
 using System;
 using System.Collections.Generic;
