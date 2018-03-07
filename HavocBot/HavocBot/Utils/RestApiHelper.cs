@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Bot.Connector;
+using Microsoft.Bot.Connector.Teams;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -107,6 +110,39 @@ namespace HavocBot.Utils
             }
 
             return response;
+        }
+
+
+        public static async Task<List<TriviaMember>> GetTeamsMembers(Activity activity, string serviceUrl,string havocTeamId)
+        {
+
+            var results = new List<TriviaMember>();
+            try
+            {
+                if (!string.IsNullOrEmpty(serviceUrl))
+                {
+                    var requestUri = $"{serviceUrl}conversations/{havocTeamId}/members";
+
+                    // Fetch the members in the current conversation
+                    var connector = new ConnectorClient(new Uri(serviceUrl));
+
+                    var members = await connector.Conversations.GetConversationMembersAsync(activity.Conversation.Id);
+                    foreach (var member in members.AsTeamsChannelAccounts())
+                    {
+                        results.Add(new TriviaMember()
+                        {
+                            Id = member != null ? member.Id : string.Empty,
+                            Name = member != null ? member.Name : string.Empty
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+            return results;
         }
     }
 }

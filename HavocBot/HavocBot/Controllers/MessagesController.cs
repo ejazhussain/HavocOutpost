@@ -1,21 +1,38 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using HavocBot.Utils;
+using System.Text;
+using Microsoft.Bot.Connector.Teams;
 
 namespace HavocBot
 {
     [BotAuthentication]
     public class MessagesController : ApiController
     {
+
+        private static string havocTeamId = "19:7f0240ce5cd64e8ea7c04cf6f1ccb693@thread.skype";
+
+        
+
         /// <summary>
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
+            //we need to get serviceURL
+            //get list of roaster information for Havoc Team
+            //GET / v3 / conversations / 19:ja0cu120i1jod12j @skype.net / members
+
+
+            string serviceUrl = activity.ServiceUrl;
+            var memebers = await RestApiHelper.GetTeamsMembers(activity, serviceUrl, havocTeamId);
+
             if (activity.Type == ActivityTypes.Message)
             {
                 await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
@@ -27,6 +44,8 @@ namespace HavocBot
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
+
+        
 
         private Activity HandleSystemMessage(Activity message)
         {
