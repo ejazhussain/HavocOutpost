@@ -32,15 +32,15 @@ namespace HavocBot.Tests.Tests
         {
             TriviaRoster triviaRoster = new TriviaRoster()
             {
-                TeamId = "19:7f0240ce5cd64e8ea7c04cf6f1ccb693@thread.skype"
+                TeamId = "17c905ae-df5f-4f03-a354-b698115d8a28"
             };
 
             List<TriviaMember> triviaMembers = new List<TriviaMember>()
             {
                 new TriviaMember()
                 {
-                    Id = "29:1pp-UDROkQmMxihhxhFpG6bf9jTPZiJXBsKvH=BpbnYGYstAD5Iy65q6NnfjgT6aq5KhOsnxEi1Vtk0MGmM06Bxw",
-                    Name = "Ejaz Hussain"
+                    Id = "846617cd-f4dc-46b4-8106-f24a7a0bccd7",
+                    Name = "Tomi Paananen"
                 }
             };
 
@@ -89,6 +89,10 @@ namespace HavocBot.Tests.Tests
 
             if (triviaLeaderboard.Length > 0)
             {
+                string teamId = triviaLeaderboard[0].Id;
+                Assert.AreEqual(false, string.IsNullOrEmpty(teamId));
+                System.Diagnostics.Debug.WriteLine($"Deserialized team ID: {teamId}");
+
                 string teamName = triviaLeaderboard[0].Name;
                 Assert.AreEqual(false, string.IsNullOrEmpty(teamName));
                 System.Diagnostics.Debug.WriteLine($"Deserialized team name: {teamName}");
