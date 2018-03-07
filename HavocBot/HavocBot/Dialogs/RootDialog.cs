@@ -16,7 +16,6 @@ namespace HavocBot.Dialogs
         private const string LineBreak = "\n\r";
         private const string CommandHelp = "help";
         private const string CommandQuestion = "question";
-        private const string CommandAnswer = "answer";
         private const string CommandRegister = "register";
 
         private const string HelpMessage =
@@ -71,7 +70,19 @@ namespace HavocBot.Dialogs
                                 triviaDatastore.PendingTriviaQuestions.Add(triviaPlayer.Id, triviaQuestion.Id);
                             }
 
-                            await context.PostAsync($"{triviaPlayer.Name.Split(' ')}, your question is: {triviaQuestion.Text}");
+                            string playerName = triviaPlayer.Name;
+                            string[] nameElements = playerName.Split(' ');
+
+                            if (nameElements.Length > 1)
+                            {
+                                playerName = nameElements[0];
+                            }
+                            else
+                            {
+                                playerName = triviaPlayer.Name;
+                            }
+
+                            await context.PostAsync($"{playerName}: your question is: {triviaQuestion.Text}");
 
                             string questionOptions = $"Options are:{LineBreak}";
 
@@ -81,7 +92,7 @@ namespace HavocBot.Dialogs
                             }
 
                             await context.PostAsync(questionOptions);
-                            await context.PostAsync($"When answering, start your answer with \"{CommandAnswer}\"");
+                            await context.PostAsync("When answering, simply type the option number");
                         }
                         else
                         {
@@ -129,8 +140,7 @@ namespace HavocBot.Dialogs
                 {
                     // Check for answer
                     int answerId = -1;
-                    string answerAsString = messageText.Remove(0, CommandAnswer.Length).Trim();
-                    bool numberParsedSuccessfully = int.TryParse(answerAsString, out answerId);
+                    bool numberParsedSuccessfully = int.TryParse(messageText, out answerId);
 
                     if (numberParsedSuccessfully && answerId >= 0 && answerId <= MaxQuestionOptionNumber)
                     {
