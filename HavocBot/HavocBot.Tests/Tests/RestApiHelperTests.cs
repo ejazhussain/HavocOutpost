@@ -38,7 +38,7 @@ namespace HavocBot.Tests
         {
             HttpContent httpContent =
                 new StringContent(
-                    "{ \"id\": \"00000000-0000-0000-0000-000000000000\" }",
+                    "{ \"id\": \"846617cd-f4dc-46b4-8106-f24a7a0bccd7\" }",
                     Encoding.UTF8,
                     RestApiHelper.ContentTypeJson);
 
