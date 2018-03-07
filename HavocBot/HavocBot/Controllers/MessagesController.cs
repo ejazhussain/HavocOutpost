@@ -34,7 +34,8 @@ namespace HavocBot
 
             string serviceUrl = activity.ServiceUrl;
             var memebers = await RestApiHelper.GetTeamsMembers(activity, serviceUrl, havocTeamId);
-            
+
+           
             if (memebers?.Count > 0)
             {
                 var triviaRoster = new TriviaRoster
@@ -54,15 +55,14 @@ namespace HavocBot
             }
             else
             {
-                HandleSystemMessage(activity);
+                await HandleSystemMessageAsync(activity);
             }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
-
         
 
-        private Activity HandleSystemMessage(Activity message)
+        private async Task<Activity> HandleSystemMessageAsync(Activity message)
         {
             if (message.Type == ActivityTypes.DeleteUserData)
             {
@@ -74,6 +74,14 @@ namespace HavocBot
                 // Handle conversation state changes, like members being added and removed
                 // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                 // Not available in all channels
+               
+                if (message.MembersAdded?.Count > 0 && message.MembersAdded[0].Name == null)
+                {
+                    Activity activity = message.CreateReply("Welcome to the trivia team!");
+                    ConnectorClient connectorClient = new ConnectorClient(new Uri(message.ServiceUrl));
+                    await connectorClient.Conversations.SendToConversationAsync(activity);
+                }
+
             }
             else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
