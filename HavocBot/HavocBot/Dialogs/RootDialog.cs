@@ -73,6 +73,7 @@ namespace HavocBot.Dialogs
                                 questionOptions += $"{triviaQuestionOption.Id}: {triviaQuestionOption.Text}{LineBreak}";
                             }
 
+                            await context.PostAsync(questionOptions);
                             await context.PostAsync($"When answering, start your answer with \"{CommandAnswer}\"");
                         }
                         else
@@ -99,7 +100,7 @@ namespace HavocBot.Dialogs
                         await context.PostAsync("Invalid answer, try again");
                     }
 
-                    if (answerId != -1)
+                    if (answerId == -1)
                     {
                         await context.PostAsync("The answer is missing");
                     }
