@@ -20,9 +20,6 @@ namespace HavocBot.Dialogs
             "Here's what you can do:" + LineBreak
             + "* Type \"{CommandQuestion}\" to get a trivia question";
 
-        private TriviaApiClient _triviaApiClient = new TriviaApiClient();
-        private InMemoryTriviaDatastore _triviaDatastore = WebApiConfig.TriviaDatastore;
-
         public Task StartAsync(IDialogContext context)
         {
             context.Wait(MessageReceivedAsync);
@@ -37,6 +34,9 @@ namespace HavocBot.Dialogs
 
             if (!string.IsNullOrEmpty(messageText))
             {
+                TriviaApiClient triviaApiClient = WebApiConfig.TriviaApiClient;
+                InMemoryTriviaDatastore triviaDatastore = WebApiConfig.TriviaDatastore;
+
                 if (messageText.Equals(CommandHelp))
                 {
                     await context.PostAsync(HelpMessage);
@@ -48,20 +48,20 @@ namespace HavocBot.Dialogs
                     if (triviaPlayer != null)
                     {
                         TriviaQuestion triviaQuestion =
-                            await _triviaApiClient.GetQuestionAsync(triviaPlayer);
+                            await triviaApiClient.GetQuestionAsync(triviaPlayer);
 
                         if (triviaQuestion != null
                             && !string.IsNullOrEmpty(triviaQuestion.Text)
                             && triviaQuestion.QuestionOptions != null
                             && triviaQuestion.QuestionOptions.Count > 0)
                         {
-                            if (_triviaDatastore.PendingTriviaQuestions.ContainsKey(triviaPlayer.Id))
+                            if (triviaDatastore.PendingTriviaQuestions.ContainsKey(triviaPlayer.Id))
                             {
-                                _triviaDatastore.PendingTriviaQuestions[triviaPlayer.Id] = triviaQuestion.Id;
+                                triviaDatastore.PendingTriviaQuestions[triviaPlayer.Id] = triviaQuestion.Id;
                             }
                             else
                             {
-                                _triviaDatastore.PendingTriviaQuestions.Add(triviaPlayer.Id, triviaQuestion.Id);
+                                triviaDatastore.PendingTriviaQuestions.Add(triviaPlayer.Id, triviaQuestion.Id);
                             }
 
                             await context.PostAsync($"{triviaPlayer.Name.Split(' ')}, your question is: {triviaQuestion.Text}");
@@ -110,21 +110,21 @@ namespace HavocBot.Dialogs
 
                         if (triviaPlayer != null)
                         {
-                            if (_triviaDatastore.PendingTriviaQuestions.ContainsKey(triviaPlayer.Id))
+                            if (triviaDatastore.PendingTriviaQuestions.ContainsKey(triviaPlayer.Id))
                             {
                                 TriviaAnswer triviaAnswer = new TriviaAnswer()
                                 {
                                     UserId = triviaPlayer.Id,
-                                    QuestionId = _triviaDatastore.PendingTriviaQuestions[triviaPlayer.Id],
+                                    QuestionId = triviaDatastore.PendingTriviaQuestions[triviaPlayer.Id],
                                     AnswerId = answerId
                                 };
 
                                 TriviaAnswerResponse triviaAnswerResponse =
-                                    await _triviaApiClient.PostAnswerAsync(triviaAnswer);
+                                    await triviaApiClient.PostAnswerAsync(triviaAnswer);
 
                                 if (triviaAnswerResponse != null)
                                 {
-                                    _triviaDatastore.PendingTriviaQuestions.Remove(triviaPlayer.Id);
+                                    triviaDatastore.PendingTriviaQuestions.Remove(triviaPlayer.Id);
 
                                     if (triviaAnswerResponse.Correct)
                                     {
@@ -164,8 +164,9 @@ namespace HavocBot.Dialogs
         /// <returns>The trivia player or null if not found.</returns>
         private async Task<TriviaPlayer> GetPlayer(IActivity activity)
         {
+            TriviaApiClient triviaApiClient = WebApiConfig.TriviaApiClient;
             TriviaPlayer[] triviaPlayers =
-                await _triviaApiClient.SearchPlayerAsync(activity.From.Name);
+                await triviaApiClient.SearchPlayerAsync(activity.From.Name);
 
             if (triviaPlayers != null && triviaPlayers.Length > 0)
             {
