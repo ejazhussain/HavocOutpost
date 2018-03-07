@@ -1,8 +1,9 @@
-﻿using System;
+﻿using System; 
 using System.Threading.Tasks;
 using HavocBot.DAL;
 using HavocBot.Datastore;
 using HavocBot.Models;
+using HavocBot.Utils;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 
@@ -11,14 +12,20 @@ namespace HavocBot.Dialogs
     [Serializable]
     public class RootDialog : IDialog<object>
     {
+        private const int MaxQuestionOptionNumber = 5;
         private const string LineBreak = "\n\r";
         private const string CommandHelp = "help";
         private const string CommandQuestion = "question";
         private const string CommandAnswer = "answer";
+        private const string CommandRegister = "register";
 
-        private const string HelpMessage = 
+        private const string HelpMessage =
             "Here's what you can do:" + LineBreak
-            + "* Type \"{CommandQuestion}\" to get a trivia question";
+            + "* To register a trivia team, type \"" + CommandRegister + "\"" + LineBreak
+            + "* Type \"" + CommandQuestion + "\" to get a trivia question" + LineBreak
+            + "* To answer a question simply type the option number" + LineBreak;
+
+        private const string HavocTeamId = "19:7f0240ce5cd64e8ea7c04cf6f1ccb693@thread.skype";
 
         public Task StartAsync(IDialogContext context)
         {
@@ -86,25 +93,46 @@ namespace HavocBot.Dialogs
                         await context.PostAsync("I'm sorry, I couldn't find your player profile. Are you sure you have registered?");
                     }
                 }
-                else if (messageText.StartsWith(CommandAnswer))
+                else if (messageText.StartsWith(CommandRegister))
                 {
+                    string serviceUrl = activity.ServiceUrl;
+                    var memebers = await TeamsApiClient.GetTeamsMembers(activity, serviceUrl, HavocTeamId);
+
+                    if (memebers?.Count > 0)
+                    {
+                        var triviaRoster = new TriviaRoster
+                        {
+                            TeamId = HavocTeamId,
+                            Members = memebers
+                        };
+
+                        TriviaRegister registerResponse = await triviaApiClient.RegisterAsync(triviaRoster);
+
+                        if (registerResponse != null)
+                        {
+                            if (registerResponse.Success)
+                            {
+                                await context.PostAsync("Team registered successfully!");
+                            }
+                            else
+                            {
+                                await context.PostAsync($"Failed to register the team: {registerResponse.Message}");
+                            }
+                        }
+                        else
+                        {
+                            await context.PostAsync($"Failed to register the team, please try again later");
+                        }
+                    }
+                }
+                else
+                {
+                    // Check for answer
                     int answerId = -1;
                     string answerAsString = messageText.Remove(0, CommandAnswer.Length).Trim();
+                    bool numberParsedSuccessfully = int.TryParse(answerAsString, out answerId);
 
-                    try
-                    {
-                        answerId = int.Parse(answerAsString);
-                    }
-                    catch (Exception)
-                    {
-                        await context.PostAsync("Invalid answer, try again");
-                    }
-
-                    if (answerId == -1)
-                    {
-                        await context.PostAsync("The answer is missing");
-                    }
-                    else
+                    if (numberParsedSuccessfully && answerId >= 0 && answerId <= MaxQuestionOptionNumber)
                     {
                         TriviaPlayer triviaPlayer = await GetPlayer(activity);
 

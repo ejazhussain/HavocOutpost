@@ -16,39 +16,12 @@ namespace HavocBot
     [BotAuthentication]
     public class MessagesController : ApiController
     {
-
-        private static string havocTeamId = "19:7f0240ce5cd64e8ea7c04cf6f1ccb693@thread.skype";
-
-        
-
         /// <summary>
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            //we need to get serviceURL
-            //get list of roaster information for Havoc Team
-            //GET / v3 / conversations / 19:ja0cu120i1jod12j @skype.net / members
-
-
-            string serviceUrl = activity.ServiceUrl;
-            var memebers = await RestApiHelper.GetTeamsMembers(activity, serviceUrl, havocTeamId);
-
-           
-            if (memebers?.Count > 0)
-            {
-                var triviaRoster = new TriviaRoster
-                {
-                    TeamId = havocTeamId,
-                    Members = memebers
-                };
-                var triviaApiClient = new TriviaApiClient();
-                var registerMemberResponse = await triviaApiClient.RegisterAsync(triviaRoster);
-
-            }
-
-
             if (activity.Type == ActivityTypes.Message)
             {
                 await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
@@ -57,10 +30,10 @@ namespace HavocBot
             {
                 await HandleSystemMessageAsync(activity);
             }
+
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
-        
 
         private async Task<Activity> HandleSystemMessageAsync(Activity message)
         {
@@ -75,13 +48,22 @@ namespace HavocBot
                 // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                 // Not available in all channels
                
-                if (message.MembersAdded?.Count > 0 && message.MembersAdded[0].Name == null)
+                if (message.MembersAdded?.Count > 0)
                 {
-                    Activity activity = message.CreateReply("Welcome to the trivia team!");
                     ConnectorClient connectorClient = new ConnectorClient(new Uri(message.ServiceUrl));
+                    Activity activity = null;
+
+                    if (string.IsNullOrEmpty(message.MembersAdded[0].Name))
+                    {
+                        activity = message.CreateReply("Hi! I am Havoc bot. Welcome to my trivia team!");
+                    }
+                    else
+                    {
+                        activity = message.CreateReply($"Hi {message.MembersAdded[0].Name}! Welcome!");
+                    }
+
                     await connectorClient.Conversations.SendToConversationAsync(activity);
                 }
-
             }
             else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {

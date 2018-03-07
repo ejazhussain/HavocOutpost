@@ -133,6 +133,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="DAL\TeamsApiClient.cs" />
     <Compile Include="DAL\TriviaApiClient.cs" />
     <Compile Include="Datastore\InMemoryTriviaDatastore.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
