@@ -212,6 +212,10 @@ namespace HavocBot.Dialogs
                         }
                     }
                 }
+                else
+                {
+                    cleanedMessage = messageText;
+                }
 
                 System.Diagnostics.Debug.WriteLine($"\"{messageText}\" -> \"{cleanedMessage}\"");
             }

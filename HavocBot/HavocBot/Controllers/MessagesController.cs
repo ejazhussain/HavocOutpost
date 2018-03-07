@@ -50,19 +50,23 @@ namespace HavocBot
                
                 if (message.MembersAdded?.Count > 0)
                 {
-                    ConnectorClient connectorClient = new ConnectorClient(new Uri(message.ServiceUrl));
+                    string name = message.MembersAdded[0].Name;
                     Activity activity = null;
 
-                    if (string.IsNullOrEmpty(message.MembersAdded[0].Name))
+                    if (string.IsNullOrEmpty(name))
                     {
                         activity = message.CreateReply("Hi! I am Havoc bot. Welcome to my trivia team!");
                     }
-                    else
+                    else if (!name.Equals(message.Recipient.Name)) // Make sure we are not greeting the bot
                     {
                         activity = message.CreateReply($"Hi {message.MembersAdded[0].Name}! Welcome!");
                     }
 
-                    await connectorClient.Conversations.SendToConversationAsync(activity);
+                    if (activity != null)
+                    {
+                        ConnectorClient connectorClient = new ConnectorClient(new Uri(message.ServiceUrl));
+                        await connectorClient.Conversations.SendToConversationAsync(activity);
+                    }
                 }
             }
             else if (message.Type == ActivityTypes.ContactRelationUpdate)
