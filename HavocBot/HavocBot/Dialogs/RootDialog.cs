@@ -229,8 +229,8 @@ namespace HavocBot.Dialogs
         private async Task<TriviaPlayer> GetPlayer(IActivity activity)
         {
             TriviaApiClient triviaApiClient = WebApiConfig.TriviaApiClient;
-            TriviaPlayer[] triviaPlayers =
-                await triviaApiClient.SearchPlayerAsync(activity.From.Name);
+            string playerName = GetFirstElement(activity.From?.Name);
+            TriviaPlayer[] triviaPlayers = await triviaApiClient.SearchPlayerAsync(playerName);
 
             if (triviaPlayers != null && triviaPlayers.Length > 0)
             {
@@ -248,24 +248,33 @@ namespace HavocBot.Dialogs
         /// <returns></returns>
         private string GetFirstName(TriviaPlayer triviaPlayer)
         {
-            string playerName = string.Empty;
+            return GetFirstElement(triviaPlayer?.Name);
+        }
 
-            if (triviaPlayer != null && !string.IsNullOrEmpty(triviaPlayer.Name))
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private string GetFirstElement(string str)
+        {
+            string firstElement = string.Empty;
+
+            if (!string.IsNullOrEmpty(str))
             {
-                playerName = triviaPlayer.Name;
-                string[] nameElements = playerName.Split(' ');
+                string[] elements = str.Split(' ');
 
-                if (nameElements.Length > 1)
+                if (elements.Length > 1)
                 {
-                    playerName = nameElements[0];
+                    firstElement = elements[0];
                 }
                 else
                 {
-                    playerName = triviaPlayer.Name;
+                    firstElement = str;
                 }
             }
 
-            return playerName;
+            return firstElement;
         }
     }
 }
