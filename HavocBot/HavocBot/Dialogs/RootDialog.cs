@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HavocBot.DAL;
+using HavocApiClients;
+using HavocApiClients.Models;
 using HavocBot.Datastore;
-using HavocBot.Models;
 using HavocBot.Utils;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;

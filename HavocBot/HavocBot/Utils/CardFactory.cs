@@ -1,4 +1,4 @@
-﻿using HavocBot.Models;
+﻿using HavocApiClients.Models;
 using Microsoft.Bot.Connector;
 using System.Collections.Generic;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HavocBot.Models
+namespace HavocApiClients.Models
 {
     /**
      * [

@@ -4,7 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 
-namespace HavocBot.Utils
+namespace HavocApiClients.Utils
 {
     public class OAuthHelper
     {

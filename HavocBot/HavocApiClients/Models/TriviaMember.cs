@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HavocBot.Models
+namespace HavocApiClients.Models
 {
     /**
      * {

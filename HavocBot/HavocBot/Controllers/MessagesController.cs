@@ -1,15 +1,10 @@
-﻿using System;
+﻿using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Connector;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector;
-using HavocBot.Utils;
-using System.Text;
-using Microsoft.Bot.Connector.Teams;
-using HavocBot.Models;
-using HavocBot.DAL;
 
 namespace HavocBot
 {
