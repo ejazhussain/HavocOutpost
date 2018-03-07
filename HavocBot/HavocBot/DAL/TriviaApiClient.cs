@@ -14,7 +14,8 @@ namespace HavocBot.DAL
         private static readonly string TriviaBaseUri = "https://msopenhackeu.azurewebsites.net";
         private static readonly string TriviaRegisterUri = TriviaBaseUri + "/api/trivia/register";
         private static readonly string TriviaQuestionUri = TriviaBaseUri + "/api/trivia/question";
-        
+        private static readonly string TriviaAnswerUri = TriviaBaseUri + "/api/trivia/answer";
+
         /// <summary>
         /// 
         /// </summary>
@@ -77,6 +78,11 @@ namespace HavocBot.DAL
             }
 
             return triviaQuestion;
+        }
+
+        public async Task<TriviaAnswerResponse> PostAnswer()
+        {
+            return null;
         }
     }
 }

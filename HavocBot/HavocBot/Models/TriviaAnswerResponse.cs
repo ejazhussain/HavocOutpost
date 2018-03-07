@@ -9,7 +9,7 @@ namespace HavocBot.Models
      *   "achievementBadgeIcon": "string"
      * }
      */
-    public class TriviaAnswer
+    public class TriviaAnswerResponse
     {
         public bool Correct
         {
