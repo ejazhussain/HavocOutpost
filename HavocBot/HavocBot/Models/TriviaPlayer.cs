@@ -11,20 +11,8 @@ namespace HavocBot.Models
      *   "achievementBadgeIcon": "string"
      * }
      */
-    public class TriviaPlayer
+    public class TriviaPlayer : TriviaMember
     {
-        public string Id
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
-
         public int Score
         {
             get;

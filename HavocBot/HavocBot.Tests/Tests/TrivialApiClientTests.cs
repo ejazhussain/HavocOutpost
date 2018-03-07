@@ -32,6 +32,28 @@ namespace HavocBot.Tests.Tests
         {
             TriviaQuestion triviaQuestion =
                 _triviaApiClient.GetQuestionAsync(new TriviaPlayer() { Id = "846617cd-f4dc-46b4-8106-f24a7a0bccd7" }).Result;
+
+            Assert.AreNotEqual(null, triviaQuestion);
+            Assert.AreEqual(false, string.IsNullOrEmpty(triviaQuestion.Text));
+            System.Diagnostics.Debug.WriteLine($"Deserialized question text: {triviaQuestion.Text}");
+            Assert.AreNotEqual(null, triviaQuestion.QuestionOptions);
+            Assert.AreNotEqual(0, triviaQuestion.QuestionOptions.Count);
+        }
+
+        [TestMethod]
+        public void TestSearchPlayer()
+        {
+            TriviaPlayer[] triviaPlayers =
+                _triviaApiClient.SearchPlayerAsync("Tomi").Result;
+
+            Assert.AreNotEqual(null, triviaPlayers);
+
+            if (triviaPlayers.Length > 0)
+            {
+                string playerName = triviaPlayers[0].Name;
+                Assert.AreEqual(false, string.IsNullOrEmpty(playerName));
+                System.Diagnostics.Debug.WriteLine($"Deserialized player name: {playerName}");
+            }
         }
     }
 }

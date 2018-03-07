@@ -4,26 +4,26 @@ namespace HavocBot.Models
 {
     /**
      * {
-     *   "userId": "00000000-0000-0000-0000-000000000000",
-     *   "questionId": 0,
-     *   "answerId": 0
+     *   "correct": true,
+     *   "achievementBadge": "string",
+     *   "achievementBadgeIcon": "string"
      * }
      */
-    public class TriviaAnswer
+    public class TriviaAnswerResponse
     {
-        public string UserId
+        public bool Correct
         {
             get;
             set;
         }
 
-        public string QuestionId
+        public string AchievementBadge
         {
             get;
             set;
         }
 
-        public string AnswerId
+        public string AchievementBadgeIcon
         {
             get;
             set;
