@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HavocBot.Tests", "HavocBot.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HavocApiClients", "HavocApiClients\HavocApiClients.csproj", "{92D460DB-4263-4FD5-9DFE-25FEEBDAC49A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HavocLeaderboard", "HavocLeaderboard\HavocLeaderboard.csproj", "{F42D248A-8D5D-4A5C-AFA3-84B2D2340082}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leaderboard", "Leaderboard\Leaderboard.csproj", "{F1A12230-CE14-4184-AB7F-E1D6C570AED7}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{92D460DB-4263-4FD5-9DFE-25FEEBDAC49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92D460DB-4263-4FD5-9DFE-25FEEBDAC49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92D460DB-4263-4FD5-9DFE-25FEEBDAC49A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F42D248A-8D5D-4A5C-AFA3-84B2D2340082}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F42D248A-8D5D-4A5C-AFA3-84B2D2340082}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F42D248A-8D5D-4A5C-AFA3-84B2D2340082}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F42D248A-8D5D-4A5C-AFA3-84B2D2340082}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F1A12230-CE14-4184-AB7F-E1D6C570AED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1A12230-CE14-4184-AB7F-E1D6C570AED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1A12230-CE14-4184-AB7F-E1D6C570AED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
