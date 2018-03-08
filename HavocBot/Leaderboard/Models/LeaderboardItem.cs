@@ -15,5 +15,11 @@ namespace Leaderboard.Models
             get;
             set;
         }
+
+        public string Score
+        {
+            get;
+            set;
+        }
     }
 }
