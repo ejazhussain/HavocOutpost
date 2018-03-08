@@ -26,5 +26,10 @@ namespace Leaderboard.Controllers
 
             return View();
         }
+
+        public ActionResult TeamLeaderboard()
+        {
+            return View();
+        }
     }
 }
