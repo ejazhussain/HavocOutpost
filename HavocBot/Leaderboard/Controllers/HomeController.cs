@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Leaderboard.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,9 +28,14 @@ namespace Leaderboard.Controllers
             return View();
         }
 
-        public ActionResult TeamLeaderboard()
+        public ActionResult TeamLeaderboard(string teamId)
         {
-            return View();
+            TeamLeaderboardViewModel teamLeaderboardViewModel = new TeamLeaderboardViewModel()
+            {
+                TeamId = teamId
+            };
+
+            return View(teamLeaderboardViewModel);
         }
     }
 }
