@@ -202,12 +202,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LeaderboardItem.cs" />
-<<<<<<< HEAD
     <Compile Include="Models\Service.cs" />
-=======
     <Compile Include="Models\MSALSessionCache.cs" />
-    <Compile Include="Models\TeamLeaderboardViewModel.cs" />
->>>>>>> 6daac4167632245ea4dfbdd4d3e52db37d7a9ded
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\OAuth2CodeRedeemerMiddleware.cs" />
   </ItemGroup>
