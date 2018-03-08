@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace HavocLeaderboard.Controllers
+namespace Leaderboard.Controllers
 {
     public class HomeController : Controller
     {
@@ -24,13 +24,6 @@ namespace HavocLeaderboard.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
-
-
-        [Route("configure")]
-        public ActionResult Configure()
-        {
             return View();
         }
     }
