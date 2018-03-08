@@ -40,7 +40,7 @@
 
         // This API tells Microsoft Teams to enable the 'Save' button. Since Microsoft Teams always assumes
         // an initial invalid state, without this call the 'Save' button will never be enabled.
-        microsoftTeams.settings.setValidityState(selectedTab === 'teamLeaderboardOption' || selectedTab === 'individualLeaderboardOption');
+        microsoftTeams.settings.setValidityState(selectedTab === 'team' || selectedTab === 'individual');
       };
     }
   });
