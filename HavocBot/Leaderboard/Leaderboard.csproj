@@ -285,6 +285,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Configure.cshtml" />
     <Content Include="Views\Home\Authenticate.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
