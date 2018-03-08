@@ -58,5 +58,22 @@ namespace Leaderboard.Controllers
         }
 
 
+<<<<<<< HEAD
+=======
+        public ActionResult TeamLeaderboard(string teamId)
+        {
+            TeamLeaderboardViewModel teamLeaderboardViewModel = new TeamLeaderboardViewModel()
+            {
+                TeamId = teamId
+            };
+
+            return View(teamLeaderboardViewModel);
+        }
+
+        public ActionResult Authenticate()
+        {
+            return View();
+        }
+>>>>>>> 6daac4167632245ea4dfbdd4d3e52db37d7a9ded
     }
 }
