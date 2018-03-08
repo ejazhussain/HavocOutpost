@@ -292,6 +292,8 @@
     <Content Include="Views\Home\Configure.cshtml" />
     <Content Include="Views\Home\Authenticate.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\Team.cshtml" />
+    <Content Include="Views\Home\Individual.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
