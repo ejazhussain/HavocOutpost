@@ -42,5 +42,10 @@ namespace Leaderboard.Controllers
 
             return View(teamLeaderboardViewModel);
         }
+
+        public ActionResult Authenticate()
+        {
+            return View();
+        }
     }
 }
