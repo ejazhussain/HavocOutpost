@@ -28,6 +28,11 @@ namespace Leaderboard.Controllers
             return View();
         }
 
+        [Route("configure")]
+        public ActionResult Configure()
+        {
+            return View();
+        }
         public ActionResult TeamLeaderboard(string teamId)
         {
             TeamLeaderboardViewModel teamLeaderboardViewModel = new TeamLeaderboardViewModel()
