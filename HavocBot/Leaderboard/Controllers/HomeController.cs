@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -9,6 +10,7 @@ namespace Leaderboard.Controllers
 {
     public class HomeController : Controller
     {
+        Service service = new Service();
         public ActionResult Index()
         {
             return View();
@@ -35,9 +37,19 @@ namespace Leaderboard.Controllers
         }
 
         [Route("team")]
-        public ActionResult Team()
+        public async Task<ActionResult> Team()
         {
-            return View();
+            List<LeaderboardItem> results = new List<LeaderboardItem>();
+        
+            //fet list of Team Leaderboard from API
+
+            var teams = await service.PopulateAsync();
+
+            if(teams?.Count > 0)
+            {
+                results = teams;
+            }
+            return View(results);
         }
         [Route("individual")]
         public ActionResult Individual()
@@ -46,14 +58,5 @@ namespace Leaderboard.Controllers
         }
 
 
-        public ActionResult TeamLeaderboard(string teamId)
-        {
-            TeamLeaderboardViewModel teamLeaderboardViewModel = new TeamLeaderboardViewModel()
-            {
-                TeamId = teamId
-            };
-
-            return View(teamLeaderboardViewModel);
-        }
     }
 }

@@ -1,7 +1,23 @@
-﻿
+﻿@model  IEnumerable<Leaderboard.Models.LeaderboardItem>
 @{
     ViewBag.Title = "Team";
 }
 
 <h2>Team</h2>
 
+@{
+
+    foreach (var item in Model)
+    {
+        <!-- Left-aligned -->
+        <div class="media">
+            <div class="media-left">
+                <img src="@item.ProfileImageUri" class="media-object" style="width:60px">
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">@item.Name</h4>
+                <p>Lorem ipsum...</p>
+            </div>
+        </div>
+    }
+}
